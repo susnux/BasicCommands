@@ -1,0 +1,51 @@
+name: BasicCommands
+main: org.os_sc.spigot.basiccommands.Plugin
+version: 0.1
+softdepend: [Vault]
+commands:
+  kills:
+    description: Shows your kill strike
+    usage: "Usage: /kills [PLAYER]"
+    permission:  basiccommands.kills
+  sethome:
+    description: Sets the global home to the current position
+    usage: "Usage: /sethome"
+    permission:  basiccommands.home
+  home:
+    description: Teleports you back to your home
+    usage: "Usage: /home"
+    permission:  basiccommands.home
+  tp:
+    description: Teleport to other player
+    usage: "Usage: /tp PLAYER"
+    permission: basiccommands.teleport.tp
+  tpinfo:
+    description: Show teleport information
+    usage: "Usage: /tpinfo"
+    permission: basiccommands.teleport.info
+  tpaccept:
+    description: Accept teleport (FIFO)
+    usage: "Usage: /tpaccept"
+    aliases: [tpa]
+    permission: basiccommands.teleport.answer
+  tpdeny:
+    description: Decline teleport (FIFO)
+    usage: "Usage: /tpdeny"
+    aliases: [tpd]
+    permission: basiccommands.teleport.answer
+permissions:
+  basiccommands.home:
+    description: Can set a home and teleport to home
+    default: true
+  basiccommands.kills:
+    default: true
+    children:
+      basiccommands.kills.own: true
+      basiccommands.kills.other: false
+  basiccommands.teleport:
+    default: true
+    children:
+      basiccommands.teleport.tp: false
+      basiccommands.teleport.info: false
+      basiccommands.teleport.answer: true
+  
