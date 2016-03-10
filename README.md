@@ -45,3 +45,11 @@ Example config.yml:
 - ```factor```: Factor how much prices increase per teleport.
 
 ### Permissions:
+
+## Build
+
+Execute:
+
+    mvn clean install
+
+Jar gets generated in ```./target```.

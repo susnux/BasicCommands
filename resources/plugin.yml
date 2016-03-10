@@ -1,6 +1,6 @@
 name: BasicCommands
 main: org.os_sc.spigot.basiccommands.Plugin
-version: 0.1
+version: ${version}
 softdepend: [Vault]
 commands:
   kills:
