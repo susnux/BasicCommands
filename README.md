@@ -8,6 +8,7 @@ BasicCommands provides some essential functions:
  * Kill statistics
    - Show current strike and total kills.
  * Providing home functionality
+ * Reward interface
 
 ### Commands:
   - ```tp PLAYER```
@@ -26,6 +27,10 @@ BasicCommands provides some essential functions:
     * Set position of home to current location
   - ```home```
     * Teleports you to your home
+  - ```ret```
+    * Return to position where you last issued ```/home``` or ```/tp```
+  - ```reward```
+    * Get a reward for your work (item for exp).
   - ```kills [PLAYER]```
     * Shows number of kills in this session and total. If no PLAYER is specified your statistics are shown.
 
@@ -34,13 +39,25 @@ Note: Teleportation costs are increased with each teleport, but costs reduce aft
 ### Config:
 Example config.yml:
 
-    config:
-      teleport:
-        startPrice: 55
-        decreaseTime: 12000
-        factor: 2
+    ---
+    teleport:
+      return:
+        costs: true
+        factor: 0.5
+      startPrice: 30
+      factor: 2
+      decreaseTime: 12000
+    reward:
+      items:
+        -
+         EXP_BOTTLE: 11
+        -
+         SADDLE: 315
+        -
+         SLIME_BLOCK: 550
+    commands: ["tp", "home", "kills"]
 
-- ```startPrice``` is the price of one teleport (in XP) 55xp are lvl 0 to lvl 5.
+- ```startPrice``` is the price of one teleport (in XP).
 - ```decreaseTime``` is the time until prices are reduces (after latest teleport) 12000 = 12 ingame hours.
 - ```factor```: Factor how much prices increase per teleport.
 
@@ -52,4 +69,4 @@ Execute:
 
     mvn clean install
 
-Jar gets generated in ```./target```.
+JAR gets generated in ```./target```.
