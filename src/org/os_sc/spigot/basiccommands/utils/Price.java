@@ -58,12 +58,12 @@ public class Price {
 	public static void init()
 	{
 		FileConfiguration conf = Plugin.instance.getConfig();
-		if (conf.isSet("config.teleport.startPrice"))
-			startPrice = conf.getInt("config.teleport.startPrice");
-		if (conf.isSet("config.teleport.factor"))
-			factor = conf.getInt("config.teleport.factor");
-		if (conf.isSet("config.teleport.decreaseTime"))
-			decreaseTime = conf.getInt("config.teleport.decreaseTime");
+		if (conf.isSet("teleport.startPrice"))
+			startPrice = conf.getInt("teleport.startPrice");
+		if (conf.isSet("teleport.factor"))
+			factor = conf.getInt("teleport.factor");
+		if (conf.isSet("teleport.decreaseTime"))
+			decreaseTime = conf.getInt("teleport.decreaseTime");
 	}
 
 	private static int startPrice = 55;

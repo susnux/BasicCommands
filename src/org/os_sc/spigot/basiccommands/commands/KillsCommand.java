@@ -8,11 +8,10 @@ import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.os_sc.spigot.basiccommands.Plugin;
 
-public class KillsCommand extends BasicCommand implements TabCompleter {
+public class KillsCommand extends BasicCommand {
 
 	@Override
 	public boolean handleCommand(CommandSender sender, Command cmd, String[] arguments) {
@@ -46,8 +45,8 @@ public class KillsCommand extends BasicCommand implements TabCompleter {
 					uuid = Plugin.instance.getServer().getPlayer(arguments[0]).getUniqueId().toString();
 				}
 			}
-			int now = config().getInt("players." + uuid + ".kills.current");
-			int total = config().getInt("players." + uuid + ".kills.total");
+			int now = data().getInt("players." + uuid + ".kills.current");
+			int total = data().getInt("players." + uuid + ".kills.total");
 			say(sender, formatMsg(now, total));
 		}
 		return true;
@@ -72,5 +71,10 @@ public class KillsCommand extends BasicCommand implements TabCompleter {
 					itr.remove();
 		}
 		return ops;
+	}
+
+	@Override
+	protected boolean requiresPlayer() {
+		return false;
 	}
 }

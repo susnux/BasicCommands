@@ -1,0 +1,18 @@
+---
+teleport:
+  return:
+    costs: true
+    factor: 0.5
+  startPrice: 30
+  factor: 2
+  decreaseTime: 12000
+reward:
+  items:
+    -
+     EXP_BOTTLE: 11
+    -
+     SADDLE: 315
+    -
+     SLIME_BLOCK: 550
+commands: ["tp", "home", "kills"]
+# disabled are: "ret" "reward"

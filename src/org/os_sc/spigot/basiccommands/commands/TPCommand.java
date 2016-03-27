@@ -10,23 +10,19 @@ import java.util.Queue;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.os_sc.spigot.basiccommands.Plugin;
 import org.os_sc.spigot.basiccommands.utils.Level;
 import org.os_sc.spigot.basiccommands.utils.Price;
+import org.os_sc.spigot.basiccommands.utils.Teleporter;
 
-public class TPCommand extends BasicCommand implements TabCompleter {
+public class TPCommand extends BasicCommand {
 	@Override
 	public boolean handleCommand(CommandSender sender, Command command, String[] args) {
-		if (!(sender instanceof Player)) {
-			say(sender, "Only ingame-players can use tp.");
-			return true;
-		}
 		if (command.getName().equals("tpaccept")) handleTPAns((Player) sender, true);
-		if (command.getName().equals("tpdeny")) handleTPAns((Player) sender, false);
-		if (command.getName().equals("tpinfo")) handleTPInfo((Player) sender);
-		if (command.getName().equals("tp")) {
+		else if (command.getName().equals("tpdeny")) handleTPAns((Player) sender, false);
+		else if (command.getName().equals("tpinfo")) handleTPInfo((Player) sender);
+		else if (command.getName().equals("tp")) {
 			if(args.length == 1)
 				handleTP((Player) sender, args[0]);
 			else
@@ -59,8 +55,11 @@ public class TPCommand extends BasicCommand implements TabCompleter {
 		ChatColor color = price < Level.getTotalXP(player) ? ChatColor.GREEN : ChatColor.RED;
 		long local = Plugin.instance.getServer().getWorlds().get(0).getFullTime();
 		long hours = (Price.getDecreaseTime() - (local - Price.getTime(player))) / 1000;
-		say(player, "Teleporation will cost: " + color + price + ChatColor.WHITE + "\n" +
-					"Next price reduction in " + hours + " hours.");
+		say(player,
+			"Your current EXP: " + ChatColor.GREEN + Level.getTotalXP(player) + ChatColor.WHITE+ "\n" +
+			(data().isSet("players." + player.getUniqueId().toString() + ".tp.last") ? "Current /ret will cost: " + (int)(data().getInt("players." + player.getUniqueId().toString() + ".tp.last.price") * config().getDouble("teleport.return.factor", 0.5) + 0.5) + "\n" : "") +
+			"Teleporation will cost: " + color + price + ChatColor.WHITE + "\n" +
+			"Next price reduction in " + hours + " hours.");
 	}
 
 	private void handleTPAns(Player sender, boolean answer)
@@ -84,8 +83,9 @@ public class TPCommand extends BasicCommand implements TabCompleter {
 						"It costs: " + Price.getPrice(p) + " XP");
 				return;
 			}
-			Level.takeXP(p, Price.increment(p));
-			p.teleport(sender);
+			Level.takeXP(p, Price.getPrice(p));
+			if (Teleporter.teleport(p, sender))
+				Price.increment(p);
 		}
 	}
 
@@ -109,5 +109,10 @@ public class TPCommand extends BasicCommand implements TabCompleter {
 		}
 		say(target, "You have got an teleporation request from: " + sender.getName() +
 				".\nUse /tpaccept or /tpdeny");
+	}
+
+	@Override
+	protected boolean requiresPlayer() {
+		return true;
 	}
 }

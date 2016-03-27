@@ -33,6 +33,14 @@ commands:
     usage: "Usage: /tpdeny"
     aliases: [tpd]
     permission: basiccommands.teleport.answer
+  ret:
+    description: Return to position teleported from
+    usage: "Usage: /ret"
+    permission: basiccommands.teleport.return
+  reward:
+    description: Get a reward for your work
+    usage: "Usage: /reward"
+    permission: basiccommands.reward.command
 permissions:
   basiccommands.home:
     description: Can set a home and teleport to home
@@ -48,4 +56,5 @@ permissions:
       basiccommands.teleport.tp: false
       basiccommands.teleport.info: false
       basiccommands.teleport.answer: true
+      basiccommands.teleport.return: false
   
